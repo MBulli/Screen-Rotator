@@ -1,0 +1,10 @@
+﻿Commandline:
+
+	screenrotator.exe [-tl] [-tp] [-r] [-h]
+
+Use one of the following parameters:
+
+-tl	Toggle screen between primary and secondary landscape mode
+-tp	Toggle screen between primary and secondary portrait mode
+-r	Rotate screen clockwise by 90°
+-h	Displays this help
