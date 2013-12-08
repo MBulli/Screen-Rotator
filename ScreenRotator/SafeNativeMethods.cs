@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-// see: http://justlikeamagic.com/2009/05/21/changing-display-settings-programmatically/
+// modified version of
+// http://justlikeamagic.com/2009/05/21/changing-display-settings-programmatically/
 
-namespace Magic.Samples.DisplaySettings
+namespace ScreenRotator
 {
     static class SafeNativeMethods
     {
@@ -160,7 +161,7 @@ namespace Magic.Samples.DisplaySettings
 
 
         [DllImport("user32.dll")]
-        static extern int ChangeDisplaySettingsEx(string lpszDeviceName,
+        public static extern int ChangeDisplaySettingsEx(string lpszDeviceName,
             ref DEVMODE lpDevMode,
             IntPtr hwnd,
             uint dwflags,
@@ -192,5 +193,45 @@ namespace Magic.Samples.DisplaySettings
         public const uint FORMAT_MESSAGE_IGNORE_INSERTS = 0x200;
         public const uint FORMAT_MESSAGE_FROM_SYSTEM = 0x1000;
         public const uint FORMAT_MESSAGE_FLAGS = FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM;
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern bool BlockInput([In, MarshalAs(UnmanagedType.Bool)] bool fBlockIt);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool DestroyIcon(IntPtr hIcon);
+
+        [DllImport("Shell32.dll", SetLastError = false)]
+        public static extern Int32 SHGetStockIconInfo(SHSTOCKICONID siid, SHGSI uFlags, ref SHSTOCKICONINFO psii);
+
+        public enum SHSTOCKICONID : uint
+        {
+            // http://msdn.microsoft.com/en-us/library/bb762542(v=vs.85).aspx
+            SIID_SHIELD = 77
+        }
+
+        [Flags]
+        public enum SHGSI : uint
+        {
+            SHGSI_ICONLOCATION = 0,
+            SHGSI_ICON = 0x000000100,
+            SHGSI_SYSICONINDEX = 0x000004000,
+            SHGSI_LINKOVERLAY = 0x000008000,
+            SHGSI_SELECTED = 0x000010000,
+            SHGSI_LARGEICON = 0x000000000,
+            SHGSI_SMALLICON = 0x000000001,
+            SHGSI_SHELLICONSIZE = 0x000000004
+        }
+
+        [StructLayoutAttribute(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct SHSTOCKICONINFO
+        {
+            public UInt32 cbSize;
+            public IntPtr hIcon;
+            public Int32 iSysIconIndex;
+            public Int32 iIcon;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+            public string szPath;
+        }
     }
 }

@@ -22,7 +22,9 @@ namespace ScreenRotator
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MainForm());
+
+                SingleInstanceController singleInstance = new SingleInstanceController();
+                singleInstance.Run(args);
             }
         }
 
@@ -57,6 +59,29 @@ namespace ScreenRotator
             string help = Properties.Resources.CmdHelp;
 
             MessageBox.Show(help, "Screen Rotator", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    }
+
+
+    class SingleInstanceController : Microsoft.VisualBasic.ApplicationServices.WindowsFormsApplicationBase
+    {
+        public SingleInstanceController()
+        {
+            this.IsSingleInstance = true;
+        }
+
+        protected override void OnStartupNextInstance(Microsoft.VisualBasic.ApplicationServices.StartupNextInstanceEventArgs eventArgs)
+        {
+            base.OnStartupNextInstance(eventArgs);
+
+            MainForm form = MainForm as MainForm;
+            if (form != null)
+                form.ShowWindow();
+        }
+
+        protected override void OnCreateMainForm()
+        {
+            MainForm = new MainForm();
         }
     }
 }

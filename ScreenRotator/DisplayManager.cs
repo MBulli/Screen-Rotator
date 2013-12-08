@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using ScreenRotator;
 
 // see: http://justlikeamagic.com/2009/05/21/changing-display-settings-programmatically/
 

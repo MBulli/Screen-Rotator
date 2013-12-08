@@ -25,7 +25,7 @@ namespace ScreenRotator
             {
                 UACHelper.RerunApplicationAsAdministrator();
             }
-            ScreenInterop.BlockInput(true);
+            SafeNativeMethods.BlockInput(true);
         }
 
         public static void RotateScreen()

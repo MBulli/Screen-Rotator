@@ -28,6 +28,11 @@ namespace ScreenRotator
         {
             base.OnShown(e);
 
+            ShowWindow();
+        }
+
+        public void ShowWindow()
+        {
             this.BringToFront();
             this.Activate();
         }
