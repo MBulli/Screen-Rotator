@@ -57,6 +57,7 @@
     <Compile Include="SafeNativeMethods.cs" />
     <Compile Include="ScreenRotator.cs" />
     <Compile Include="UACHelper.cs" />
+    <Compile Include="UserInputLocker.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

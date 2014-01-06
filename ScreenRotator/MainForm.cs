@@ -18,10 +18,7 @@ namespace ScreenRotator
         {
             InitializeComponent();
 
-            if (!UACHelper.IsAdministrator())
-                buttonBlockInput.Image = UACHelper.GetUACShieldIcon();
-            else
-                buttonBlockInput.Image = Properties.Resources.Lock;
+            UserInputLocker.UserAbortedInputLock += UserInputLocker_UserAbortedInputLock;
         }
 
         protected override void OnShown(EventArgs e)
@@ -29,6 +26,13 @@ namespace ScreenRotator
             base.OnShown(e);
 
             ShowWindow();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            UserInputLocker.UnlockInput();
         }
 
         public void ShowWindow()
@@ -63,8 +67,8 @@ namespace ScreenRotator
 
         private void buttonBlockInput_Click(object sender, EventArgs e)
         {
-            ScreenRotator.BlockInput();
-            this.WindowState = FormWindowState.Minimized;
+            UserInputLocker.LockInput();
+            this.WindowState = FormWindowState.Minimized; 
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
@@ -73,6 +77,11 @@ namespace ScreenRotator
             {
                 this.Close();
             }
+        }
+
+        void UserInputLocker_UserAbortedInputLock(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

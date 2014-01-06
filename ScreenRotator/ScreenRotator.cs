@@ -19,15 +19,6 @@ namespace ScreenRotator
                     select s).FirstOrDefault();
         }
 
-        public static void BlockInput()
-        {
-            if (!UACHelper.IsAdministrator())
-            {
-                UACHelper.RerunApplicationAsAdministrator();
-            }
-            SafeNativeMethods.BlockInput(true);
-        }
-
         public static void RotateScreen()
         {
             DisplayManager.RotateScreen(true);

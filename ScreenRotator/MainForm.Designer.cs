@@ -78,13 +78,14 @@
             // buttonBlockInput
             // 
             this.buttonBlockInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBlockInput.Image = global::ScreenRotator.Properties.Resources.Lock;
             this.buttonBlockInput.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonBlockInput.Location = new System.Drawing.Point(12, 175);
             this.buttonBlockInput.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.buttonBlockInput.Name = "buttonBlockInput";
             this.buttonBlockInput.Size = new System.Drawing.Size(578, 44);
             this.buttonBlockInput.TabIndex = 4;
-            this.buttonBlockInput.Text = "Lock keyboard & mouse (Unlock with ctrl+alt+del or close this window)";
+            this.buttonBlockInput.Text = "Lock keyboard & mouse (Double hit \'Esc\' or close window to unlock)";
             this.buttonBlockInput.UseMnemonic = false;
             this.buttonBlockInput.UseVisualStyleBackColor = true;
             this.buttonBlockInput.Click += new System.EventHandler(this.buttonBlockInput_Click);
