@@ -14,6 +14,9 @@ namespace ScreenRotator
     {
         private static long latestEscapeKey = 0;
 
+        private static readonly SafeNativeMethods.HOOKPROC KeyboardHookProc = new SafeNativeMethods.HOOKPROC(ProcessKB);
+        private static readonly SafeNativeMethods.HOOKPROC MouseHookProc = new SafeNativeMethods.HOOKPROC(ProcessMS);
+
         private static IntPtr hKBHook;
         private static IntPtr hMSHook;
 
@@ -34,9 +37,9 @@ namespace ScreenRotator
             IntPtr hModule = SafeNativeMethods.GetModuleHandle(null);
 
             if (hKBHook == IntPtr.Zero)
-                hKBHook = SafeNativeMethods.SetWindowsHookEx(SafeNativeMethods.WH_KEYBOARD_LL, ProcessKB, hModule, 0);
+                hKBHook = SafeNativeMethods.SetWindowsHookEx(SafeNativeMethods.WH_KEYBOARD_LL, KeyboardHookProc, hModule, 0);
             if (hMSHook == IntPtr.Zero)
-                hMSHook = SafeNativeMethods.SetWindowsHookEx(SafeNativeMethods.WH_MOUSE_LL, ProcessMS, hModule, 0);
+                hMSHook = SafeNativeMethods.SetWindowsHookEx(SafeNativeMethods.WH_MOUSE_LL, MouseHookProc, hModule, 0);
         }
 
         private static void UninstallHooks()

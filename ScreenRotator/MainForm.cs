@@ -68,7 +68,7 @@ namespace ScreenRotator
         private void buttonBlockInput_Click(object sender, EventArgs e)
         {
             UserInputLocker.LockInput();
-            this.WindowState = FormWindowState.Minimized; 
+            this.WindowState = FormWindowState.Minimized;
         }
 
         private void MainForm_KeyUp(object sender, KeyEventArgs e)

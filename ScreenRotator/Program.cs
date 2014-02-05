@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,6 +23,8 @@ namespace ScreenRotator
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+
+                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
                 SingleInstanceController singleInstance = new SingleInstanceController();
                 singleInstance.Run(args);
@@ -59,6 +62,13 @@ namespace ScreenRotator
             string help = Properties.Resources.CmdHelp;
 
             MessageBox.Show(help, "Screen Rotator", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        [SecurityPermission(SecurityAction.Demand, ControlAppDomain = true)]
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            // try to unlock input in case of a unhandled exception
+            UserInputLocker.UnlockInput();
         }
     }
 
